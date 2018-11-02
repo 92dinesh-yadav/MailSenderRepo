@@ -1,0 +1,5 @@
+package com.nec.mail.sender.app;
+
+public class ApplicationMain {
+
+}

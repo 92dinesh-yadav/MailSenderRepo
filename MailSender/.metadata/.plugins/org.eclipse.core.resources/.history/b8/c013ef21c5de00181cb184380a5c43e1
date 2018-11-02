@@ -1,0 +1,42 @@
+package com.nec.mail.sender.service;
+
+import java.io.UnsupportedEncodingException;
+
+import javax.annotation.PostConstruct;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MailSenderService {
+
+	@Autowired
+	private JavaMailSender javaMailSender;
+	
+	@PostConstruct
+	public void sendMail() {
+		
+		System.out.println("Going to send email");
+		
+		MimeMessage message = javaMailSender.createMimeMessage();
+
+        try {
+        	MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
+        	//helper.setFrom(new InternetAddress("92dkyadav@gmail.com", "ALP App"));
+            helper.setTo("92dinesh.here@gmail.com");
+            helper.setText("Hello test email", true);
+            helper.setSubject("Test Mail");
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            e.printStackTrace();
+            //return "Error while sending mail ..";
+        }
+        javaMailSender.send(message);
+        System.out.println("Email has been sent");
+	}
+	
+}
